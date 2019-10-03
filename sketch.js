@@ -1,18 +1,40 @@
+let BotonActivar;
+let BotonApagar;
+let EstadoFondo = false;
+
 var client = mqtt.connect('wss://polloALSW:PolloSecreto@broker.shiftr.io', {
-  clientId: 'javascript'
+  clientId: 'ControladorWeb'
 });
 
-client.on('connect', function(){
-  console.log('client has connected!');
+function draw() {
+  if (EstadoFondo) {
+    background(0);
+  } else {
+    background(255);
+  }
+}
 
-  client.subscribe('/ALSW/#');
-  // client.unsubscribe('/example');
+function setup() {
+  createCanvas(200, 200);
+  createP();
+  BotonActivar = createButton("Activar Led");
+  BotonApagar = createButton("Apagar Led");
+  BotonActivar.mousePressed(ActivarLed);
+  BotonApagar.mousePressed(ApagarLed);
+}
 
-  setInterval(function(){
-    client.publish('/hello', 'world');
-  }, 1000);
-});
+function ApagarLed() {
+  console.log("Apagnado Led");
+  client.publish('/ALSW/Led', '0');
+}
 
-client.on('message', function(topic, message) {
-  console.log('new message:', topic, message.toString());
+function ActivarLed() {
+  console.log("Encender Led");
+  client.publish('/ALSW/Led', '1');
+}
+
+
+client.on('connect', function() {
+  console.log('MQTT conectado');
+  client.subscribe('/ALSW/Boton');
 });
