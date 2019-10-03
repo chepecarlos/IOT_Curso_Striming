@@ -3,7 +3,7 @@ let BotonApagar;
 let EstadoFondo = false;
 
 let BrokerMQTT = 'broker.shiftr.io';
-let PuertoMQTT = 443;
+let PuertoMQTT = [443];
 let ClienteIDMQTT = "Pagina-" + Math.floor(Math.random() * 1000);
 let UsuarioMQTT = "polloALSW";
 let ContrasenaMQTT = "PolloSecreto";
@@ -17,7 +17,8 @@ client.connect({
   onSuccess: CuandoConectadoMQTT,
   userName: UsuarioMQTT,
   password: ContrasenaMQTT,
-  hosts: Broker
+  hosts: Broker,
+  ports: PuertoMQTT
 });
 
 function MQTTPerder(responseObject) {
