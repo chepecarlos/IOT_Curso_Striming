@@ -1,4 +1,4 @@
-var client = mqtt.connect('mqttwss://polloALSW:PolloSecreto@broker.shiftr.io', {
+var client = mqtt.connect('wss://polloALSW:PolloSecreto@broker.shiftr.io', {
   clientId: 'javascript'
 });
 
